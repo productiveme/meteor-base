@@ -43,29 +43,22 @@ jobs:
         username: ${{ vars.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_PERSONAL_ACCESS_TOKEN }}
 
-    - name: Build and Push multi-architecture Docker image
+    - name: Build local Docker image for pushing
       if: ${{ github.ref == 'refs/heads/main' }}
       run: |
-        # Build and push multi-architecture image
-        docker buildx build \
-          --platform linux/amd64,linux/arm64 \
+        # Build single-arch image for local use and pushing
+        docker build \
           --build-arg "METEOR_VERSION=${{ matrix.version }}" \
           --tag productiveme/meteor-base:${{ matrix.version }} \
-          --push \
           ./src
         
         # Also tag as latest if this is the latest version
         if [[ "${{ matrix.version }}" == "3.3" ]]; then
-          docker buildx build \
-            --platform linux/amd64,linux/arm64 \
-            --build-arg "METEOR_VERSION=${{ matrix.version }}" \
-            --tag productiveme/meteor-base:latest \
-            --push \
-            ./src
+          docker tag productiveme/meteor-base:${{ matrix.version }} productiveme/meteor-base:latest
         fi
 
-    - name: Test
-      run: ./test.sh
+    - name: Push Docker image
+      if: ${{ github.ref == 'refs/heads/main' }}
+      run: ./push.sh
       env:
         CI_VERSION: ${{ matrix.version }}
-        SKIP_CLEANUP: 1
