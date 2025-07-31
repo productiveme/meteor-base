@@ -1,6 +1,6 @@
 # Base Docker Image for Meteor Apps
 
-This repo contains a base Docker image for use by [Meteor](https://www.meteor.com/) apps built using a [multistage Dockerfile](https://docs.docker.com/develop/develop-images/multistage-build/). This image supports **Meteor 3.0.1 and above only**. You might want to use this base because:
+This repo contains a base Docker image for use by [Meteor](https://www.meteor.com/) apps built using a [multistage Dockerfile](https://docs.docker.com/develop/develop-images/multistage-build/). This image supports **Meteor 3.2 and above only**. You might want to use this base because:
 
 - You can build/bundle your Meteor app as part of building your Docker image, rather than outside of Docker before the Docker build. This means the machine doing the building need not have Node or Meteor installed, which is important for continuous integration setups; and ensures repeatable builds, since the build environment is isolated and controlled.
 
@@ -75,7 +75,7 @@ npm install --global npm-check-updates
 ./update.sh --meteor-version 7.7.7 --node-version 8.8.8
 ```
 
-This will update the various files in this repo that need changing for each new Meteor release. Commit this change on a new branch and open a pull request to this repo to get the new version added. Once the PR is merged, `./build.sh && ./test.sh && ./push.sh` will be run to rebuild, test and publish all images for all supported versions of Meteor 3+. This will also update the version of Ubuntu in the base images to the latest Ubuntu version.
+This will update the various files in this repo that need changing for each new Meteor release. Commit this change on a new branch and open a pull request to this repo to get the new version added. Once the PR is merged, `./build.sh && ./test.sh && ./push.sh` will be run to rebuild, test and publish all images for all supported versions of Meteor 3.2+. This will also update the version of Ubuntu in the base images to the latest Ubuntu version.
 
 ### Test
 

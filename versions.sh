@@ -2,15 +2,8 @@
 
 #!/usr/bin/env bash
 
-# Versions to build this Docker image for (Meteor 3+ only)
+# Versions to build this Docker image for (Meteor 3.2+ only)
 meteor_versions=( \
-	'3.0.1' \
-	'3.0.2' \
-	'3.0.3' \
-	'3.0.4' \
-	'3.1' \
-	'3.1.1' \
-	'3.1.2' \
 	'3.2' \
 	'3.3'
 )
