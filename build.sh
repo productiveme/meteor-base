@@ -4,9 +4,9 @@ source ./versions.sh
 
 
 build_cmd() {
-	docker build --build-arg "METEOR_VERSION=$1" --tag geoffreybooth/meteor-base:"$1" ./src
+	docker build --build-arg "METEOR_VERSION=$1" --tag productiveme/meteor-base:"$1" ./src
 	if [[ $1 == $latest_version ]]; then
-		if ! docker tag geoffreybooth/meteor-base:"$1" geoffreybooth/meteor-base:latest; then
+		if ! docker tag productiveme/meteor-base:"$1" productiveme/meteor-base:latest; then
 			printf "${RED}Error tagging Docker base image for Meteor (latest version)${NC}\n"
 			exit 1
 		fi

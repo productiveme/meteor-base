@@ -1,6 +1,6 @@
 # Base Docker Image for Meteor Apps
 
-This repo contains a base Docker image for use by [Meteor](https://www.meteor.com/) apps built using a [multistage Dockerfile](https://docs.docker.com/develop/develop-images/multistage-build/). You might want to use this base because:
+This repo contains a base Docker image for use by [Meteor](https://www.meteor.com/) apps built using a [multistage Dockerfile](https://docs.docker.com/develop/develop-images/multistage-build/). This image supports **Meteor 3.0.1 and above only**. You might want to use this base because:
 
 - You can build/bundle your Meteor app as part of building your Docker image, rather than outside of Docker before the Docker build. This means the machine doing the building need not have Node or Meteor installed, which is important for continuous integration setups; and ensures repeatable builds, since the build environment is isolated and controlled.
 
@@ -10,7 +10,7 @@ This repo contains a base Docker image for use by [Meteor](https://www.meteor.co
 
 ### Step 1: Bootstrap `Dockerfile` from template
 
-Copy `example/default.dockerfile` (or `example/app-with-native-dependencies.dockerfile` if your app has native dependencies that require compilation such as `bcrypt`, or if your app is using a version of Meteor older than 1.8.1) into the root of your project and rename it `Dockerfile`. This file assumes that your Meteor app is one level down from the root in a folder named `app`; either move your app there, or edit `Dockerfile` to point to your desired path (or the root of your project). Leave `Dockerfile` at the root.
+Copy `example/default.dockerfile` (or `example/app-with-native-dependencies.dockerfile` if your app has native dependencies that require compilation such as `bcrypt`) into the root of your project and rename it `Dockerfile`. This file assumes that your Meteor app is one level down from the root in a folder named `app`; either move your app there, or edit `Dockerfile` to point to your desired path (or the root of your project). Leave `Dockerfile` at the root.
 
 ### Step 2: Set the correct Meteor version in the `Dockerfile`
 
@@ -19,15 +19,15 @@ Edit the `Dockerfile` you copied into your project, changing the first line so t
 For example, if your project is running under Meteor 3.3:
 
 ```Dockerfile
-FROM geoffreybooth/meteor-base:3.3
+FROM productiveme/meteor-base:3.3
 ```
 
-This version must match an available tag from [geoffreybooth/meteor-base](https://hub.docker.com/r/geoffreybooth/meteor-base/tags).
+This version must match an available tag from [productiveme/meteor-base](https://hub.docker.com/r/productiveme/meteor-base/tags).
 
 If necessary, update version in the `FROM node` line to use the Node version appropriate for your release of Meteor. From your application folder, you can get this version via the following command:
 
 ```bash
-docker run --rm geoffreybooth/meteor-base:$(cat ./.meteor/release | cut -c8-99) meteor node --version | cut -c2-99 | grep -o "[0-9\.]*"
+docker run --rm productiveme/meteor-base:$(cat ./.meteor/release | cut -c8-99) meteor node --version | cut -c2-99 | grep -o "[0-9\.]*"
 ```
 
 ### Step 3: Configure `.dockerignore` to speed up builds
@@ -75,7 +75,7 @@ npm install --global npm-check-updates
 ./update.sh --meteor-version 7.7.7 --node-version 8.8.8
 ```
 
-This will update the various files in this repo that need changing for each new Meteor release. Commit this change on a new branch and open a pull request to this repo to get the new version added. Once the PR is merged, `./build.sh && ./test.sh && ./push.sh` will be run to rebuild, test and publish all images for all versions of Meteor ≥ 1.9. This will also update the version of Ubuntu in the base images to the latest Ubuntu version.
+This will update the various files in this repo that need changing for each new Meteor release. Commit this change on a new branch and open a pull request to this repo to get the new version added. Once the PR is merged, `./build.sh && ./test.sh && ./push.sh` will be run to rebuild, test and publish all images for all supported versions of Meteor 3+. This will also update the version of Ubuntu in the base images to the latest Ubuntu version.
 
 ### Test
 

@@ -18,7 +18,7 @@ cd example
 
 at_least_one_failure=false
 for version in "${versions[@]}"; do
-	printf "${YELLOW}Testing Docker image geoffreybooth/meteor-base:${version}...${NC}\n"
+	printf "${YELLOW}Testing Docker image productiveme/meteor-base:${version}...${NC}\n"
 	SECONDS=0
 
 	rm -f test.dockerfile
@@ -29,10 +29,10 @@ for version in "${versions[@]}"; do
 	set_node_version "${version}"
 
 	echo 'Creating test app...'
-	run_with_suppressed_output "docker run --rm --volume ${PWD}:/opt/tmp --workdir /opt/tmp geoffreybooth/meteor-base:${version} meteor create --release=${version} test-app"
+	run_with_suppressed_output "docker run --rm --volume ${PWD}:/opt/tmp --workdir /opt/tmp productiveme/meteor-base:${version} meteor create --release=${version} test-app"
 
 	cp "${dockerfile}" test.dockerfile
-	do_sed "s|FROM geoffreybooth/meteor-base:.*|FROM geoffreybooth/meteor-base:${version}|" test.dockerfile
+	do_sed "s|FROM productiveme/meteor-base:.*|FROM productiveme/meteor-base:${version}|" test.dockerfile
 
 	if [[ $(get_version_string "${node_version}") -ge $(get_version_string 14.21.4) && $(get_version_string "${node_version}") -lt $(get_version_string 18.0.0) ]]; then
 		echo 'Using Meteor fork of Node Docker image...'
@@ -74,17 +74,17 @@ for version in "${versions[@]}"; do
 	if [ $exit_code -ne 0 ]; then
 		# For 14.21.4 <= $node_version < 18.0.0, we need to use the Meteor fork of the Node Docker image; else, we use the regular official Node Docker image
 		if [[ $(get_version_string "${node_version}") -ge $(get_version_string 14.21.4) && $(get_version_string "${node_version}") -lt $(get_version_string 18.0.0) ]]; then
-			printf "${RED}FAIL for geoffreybooth/meteor-base:${version} with meteor/node:${node_version}-alpine3.17${NC} after ${elapsed}\n"
+			printf "${RED}FAIL for productiveme/meteor-base:${version} with meteor/node:${node_version}-alpine3.17${NC} after ${elapsed}\n"
 		else
-			printf "${RED}FAIL for geoffreybooth/meteor-base:${version} with node:${node_version}-alpine${NC} after ${elapsed}\n"
+			printf "${RED}FAIL for productiveme/meteor-base:${version} with node:${node_version}-alpine${NC} after ${elapsed}\n"
 		fi
 		at_least_one_failure=true
 	else
 		# For 14.21.4 <= $node_version < 18.0.0, we need to use the Meteor fork of the Node Docker image; else, we use the regular official Node Docker image
 		if [[ $(get_version_string "${node_version}") -ge $(get_version_string 14.21.4) && $(get_version_string "${node_version}") -lt $(get_version_string 18.0.0) ]]; then
-			printf "${GREEN}PASS for geoffreybooth/meteor-base:${version} with meteor/node:${node_version}-alpine3.17${NC} after ${elapsed}\n"
+			printf "${GREEN}PASS for productiveme/meteor-base:${version} with meteor/node:${node_version}-alpine3.17${NC} after ${elapsed}\n"
 		else
-			printf "${GREEN}PASS for geoffreybooth/meteor-base:${version} with node:${node_version}-alpine${NC} after ${elapsed}\n"
+			printf "${GREEN}PASS for productiveme/meteor-base:${version} with node:${node_version}-alpine${NC} after ${elapsed}\n"
 		fi
 	fi
 

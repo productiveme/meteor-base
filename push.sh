@@ -5,13 +5,13 @@ source ./versions.sh
 
 for version in "${versions[@]}"; do
 	printf "${GREEN}Pushing Docker base image for Meteor ${version}...${NC}\n"
-	if ! docker push geoffreybooth/meteor-base:"${version}"; then
+	if ! docker push productiveme/meteor-base:"${version}"; then
 		printf "${RED}Error pushing Docker base image for Meteor ${version}${NC}\n"
 		exit 1
 	fi
 
 	if [[ $version == $latest_version ]]; then
-		if ! docker push geoffreybooth/meteor-base:latest; then
+		if ! docker push productiveme/meteor-base:latest; then
 			printf "${RED}Error pushing Docker base image for Meteor (latest version)${NC}\n"
 			exit 1
 		fi
