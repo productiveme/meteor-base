@@ -25,16 +25,16 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
-    # - name: Build (single architecture for testing)
-    #   run: ./build.sh
-    #   env:
-    #     CI_VERSION: ${{ matrix.version }}
+    - name: Build (single architecture for testing)
+      run: ./build.sh
+      env:
+        CI_VERSION: ${{ matrix.version }}
 
-    # - name: Test
-    #   run: ./test.sh
-    #   env:
-    #     CI_VERSION: ${{ matrix.version }}
-    #     SKIP_CLEANUP: 1
+    - name: Test
+      run: ./test.sh
+      env:
+        CI_VERSION: ${{ matrix.version }}
+        SKIP_CLEANUP: 1
 
     - name: Login to Docker Hub
       if: ${{ github.ref == 'refs/heads/main' }}
@@ -69,16 +69,3 @@ jobs:
       env:
         CI_VERSION: ${{ matrix.version }}
         SKIP_CLEANUP: 1
-
-    - name: Login to Docker Hub
-      if: ${{ github.ref == 'refs/heads/main' }}
-      uses: docker/login-action@v3
-      with:
-        username: ${{ vars.DOCKER_HUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_PERSONAL_ACCESS_TOKEN }}
-
-    - name: Push Docker image
-      if: ${{ github.ref == 'refs/heads/main' }}
-      run: ./push.sh
-      env:
-        CI_VERSION: ${{ matrix.version }}
