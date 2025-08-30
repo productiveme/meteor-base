@@ -10,6 +10,7 @@ jobs:
       matrix:
         version:
           # This must match what's in versions.sh (Meteor 3.2+ only)
+          - '2.7'
           - '3.2'
           - '3.3'
 
