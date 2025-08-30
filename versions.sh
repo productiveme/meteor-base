@@ -4,7 +4,6 @@
 
 # Versions to build this Docker image for (Meteor 3.2+ only)
 meteor_versions=( \
-	'2.16' \
   '3.2' \
 	'3.3'
 )

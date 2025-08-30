@@ -10,7 +10,6 @@ jobs:
       matrix:
         version:
           # This must match what's in versions.sh (Meteor 3.2+ only)
-          - "2.16"
           - "3.2"
           - "3.3"
 
@@ -36,9 +35,18 @@ jobs:
       - name: Build and Push multi-architecture Docker image
         if: ${{ github.ref == 'refs/heads/main' }}
         run: |
-          # Build and push multi-architecture image
+          # Set platform based on Meteor version (ARM64 support issues with older versions)
+          if [[ "${{ matrix.version }}" == "2.16" ]]; then
+            PLATFORMS="linux/amd64"
+            echo "Building Meteor ${{ matrix.version }} for AMD64 only due to ARM64 compatibility issues"
+          else
+            PLATFORMS="linux/amd64,linux/arm64"
+            echo "Building Meteor ${{ matrix.version }} for multi-architecture"
+          fi
+
+          # Build and push image
           docker buildx build \
-            --platform linux/amd64,linux/arm64 \
+            --platform "$PLATFORMS" \
             --build-arg "METEOR_VERSION=${{ matrix.version }}" \
             --tag productiveme/meteor-base:${{ matrix.version }} \
             --push \
