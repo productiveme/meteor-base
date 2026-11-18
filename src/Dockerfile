@@ -1,7 +1,10 @@
 # Based on:
 # - https://github.com/jshimko/meteor-launchpad/blob/master/Dockerfile
 # - https://github.com/meteor/galaxy-images/blob/master/ubuntu/Dockerfile
-FROM ubuntu
+# Pinned to 24.04 LTS: newer Ubuntu releases ship uutils coreutils, whose
+# argv[0] check breaks the Meteor launcher under the QEMU emulation used for
+# multi-architecture builds ("Security violation: Requested utility `env`...")
+FROM ubuntu:24.04
 
 # Meteor version to build for; see ../build.sh
 ARG METEOR_VERSION

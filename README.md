@@ -75,7 +75,7 @@ npm install --global npm-check-updates
 ./update.sh --meteor-version 7.7.7 --node-version 8.8.8
 ```
 
-This will update the various files in this repo that need changing for each new Meteor release. Commit this change on a new branch and open a pull request to this repo to get the new version added. Once the PR is merged, `./build.sh && ./test.sh && ./push.sh` will be run to rebuild, test and publish all images for all supported versions of Meteor 3.2+. This will also update the version of Ubuntu in the base images to the latest Ubuntu version.
+This will update the various files in this repo that need changing for each new Meteor release. Commit this change on a new branch and open a pull request to this repo to get the new version added. Once the PR is merged, `./build.sh && ./test.sh && ./push.sh` will be run to rebuild, test and publish all images for all supported versions of Meteor 3.2+. The base images use Ubuntu 24.04 LTS, because newer Ubuntu releases ship uutils coreutils, which breaks the Meteor install under the QEMU emulation used for multi-architecture builds.
 
 ### Test
 
