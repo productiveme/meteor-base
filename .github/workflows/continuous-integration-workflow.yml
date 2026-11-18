@@ -12,6 +12,7 @@ jobs:
           # This must match what's in versions.sh (Meteor 3.2+ only)
           - "3.2"
           - "3.3"
+          - "3.6"
 
     steps:
       - name: Checkout
@@ -53,7 +54,7 @@ jobs:
             ./src
 
           # Also tag as latest if this is the latest version
-          if [[ "${{ matrix.version }}" == "3.3" ]]; then
+          if [[ "${{ matrix.version }}" == "3.6" ]]; then
             docker buildx build \
               --platform linux/amd64,linux/arm64 \
               --build-arg "METEOR_VERSION=${{ matrix.version }}" \

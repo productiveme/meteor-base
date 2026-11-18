@@ -16,10 +16,10 @@ Copy `example/default.dockerfile` (or `example/app-with-native-dependencies.dock
 
 Edit the `Dockerfile` you copied into your project, changing the first line so that the numbers at the end match the version of Meteor of your project. You can find your project’s Meteor version in your app’s `.meteor/release` file.
 
-For example, if your project is running under Meteor 3.3:
+For example, if your project is running under Meteor 3.6:
 
 ```Dockerfile
-FROM productiveme/meteor-base:3.3
+FROM productiveme/meteor-base:3.6
 ```
 
 This version must match an available tag from [productiveme/meteor-base](https://hub.docker.com/r/productiveme/meteor-base/tags).
